@@ -1,6 +1,7 @@
 package net.lectures.springboot.controller;
 
 import lombok.AllArgsConstructor;
+import net.lectures.springboot.dto.UserDto;
 import net.lectures.springboot.entity.User;
 import net.lectures.springboot.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -16,23 +17,29 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/create")
-    public ResponseEntity<User> createUser(@RequestBody User user){
+    public ResponseEntity<UserDto> createUser(@RequestBody UserDto user){
 
-        return new ResponseEntity<User>(userService.createUser(user), HttpStatus.CREATED);
+        return new ResponseEntity<UserDto>(userService.createUser(user), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable("id") Long id){
+    public ResponseEntity<UserDto> getUserById(@PathVariable("id") Long id){
         return ResponseEntity.ok(userService.getUserById(id));
     }
 
     @GetMapping()
-    public ResponseEntity<List<User>> getAllUsers(){
+    public ResponseEntity<List<UserDto>> getAllUsers(){
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
-    @PutMapping("/update/{id}")
+    /*@PutMapping("/update/{id}")
     public ResponseEntity<User> updateUser(@PathVariable("id") Long id,@RequestBody User user){
+        user.setId(id);
+        return ResponseEntity.ok(userService.updateUser(user));
+    }*/
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<UserDto> updateUser(@PathVariable("id") Long id,@RequestBody UserDto user){
         user.setId(id);
         return ResponseEntity.ok(userService.updateUser(user));
     }
